@@ -5,7 +5,8 @@
 		require 'conn.php';
 
 		$idusuario = $_POST['idusuario'];
-		$execute = $PDO->prepare("DELETE FROM usuarios WHERE idusuario = $idusuario");
+		$execute = $PDO->prepare("UPDATE usuarios SET status = '0' WHERE idusuario = $idusuario");
+		
 		$result = $execute->execute();
 
 		if ($result) {

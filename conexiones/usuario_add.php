@@ -11,7 +11,7 @@
 		$contrasena = $_POST['contrasena'];
 		$fecha = date('Y-m-d');
 
-		$execute = $PDO->prepare("INSERT INTO usuarios VALUES (NULL, :idrol, :nombre, :apellidos, :email, :password, :fecha_creacion)");
+		$execute = $PDO->prepare("INSERT INTO usuarios VALUES (NULL, :idrol, :nombre, :apellidos, :email, :password, :status, :fecha_creacion)");
 
 		$result = $execute->execute(array(
 			':idrol' => $idrol,
@@ -19,6 +19,7 @@
 			':apellidos' => $apellidos,
 			':email' => $correo,
 			':password' => $contrasena,
+			':status' => '1',
 			':fecha_creacion' => $fecha
 		));
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 28-04-2020 a las 09:19:04
+-- Tiempo de generación: 04-05-2020 a las 11:04:45
 -- Versión del servidor: 5.7.29-0ubuntu0.18.04.1
 -- Versión de PHP: 7.2.24-0ubuntu0.18.04.4
 
@@ -61,7 +61,7 @@ CREATE TABLE `herramientas` (
 --
 
 INSERT INTO `herramientas` (`idherramienta`, `idcategoria`, `herramienta`, `cantidad`, `nota`) VALUES
-(1, 1, 'Triplay1', 12, NULL),
+(1, 1, 'Triplay1', 10, NULL),
 (2, 1, 'Barrotes', 10, NULL),
 (3, 1, 'Polines', 11, NULL),
 (4, 1, 'Duela', 15, NULL),
@@ -83,10 +83,9 @@ INSERT INTO `herramientas` (`idherramienta`, `idcategoria`, `herramienta`, `cant
 (20, 3, 'Revolvedoras', 10, NULL),
 (21, 3, 'Taladros', 23, NULL),
 (22, 3, 'Esmeriles', 7, NULL),
-(23, 3, 'Cortados de loseta', 24, NULL),
+(23, 3, 'Cortados de loseta', 22, NULL),
 (24, 3, 'Cisayas', 4, NULL),
 (25, 3, 'Cortadora de concreto', 17, NULL),
-(26, 3, 'Cimbra metálica calle ', 26, NULL),
 (27, 3, 'Reglas metálicas calle', 32, NULL);
 
 -- --------------------------------------------------------
@@ -107,11 +106,8 @@ CREATE TABLE `materiales_obra` (
 --
 
 INSERT INTO `materiales_obra` (`idmaterial_obra`, `idobra`, `idherramienta`, `cantidad`) VALUES
-(4, 1, 8, 12),
-(5, 1, 12, 5),
-(6, 4, 1, 45),
-(7, 4, 4, 2),
-(8, 4, 9, 5);
+(15, 10, 1, 4),
+(16, 10, 23, 2);
 
 -- --------------------------------------------------------
 
@@ -132,9 +128,7 @@ CREATE TABLE `obras` (
 --
 
 INSERT INTO `obras` (`idobra`, `idusuario`, `obra`, `fecha_creacion`, `nota`) VALUES
-(1, 1, 'Obra Edificio', '2020-04-26', ''),
-(2, 1, 'Obra Puente ', '2020-04-02', ''),
-(4, 2, 'EJemplo', '2020-04-26', '');
+(10, 3, 'Obra Puente', '2020-05-04', '');
 
 -- --------------------------------------------------------
 
@@ -155,8 +149,7 @@ CREATE TABLE `roles` (
 
 INSERT INTO `roles` (`idrol`, `rol`, `descripcion`, `fecha_creacion`) VALUES
 (1, 'administrador', 'Tiene el control total del sistema.', '2020-03-04'),
-(2, 'Lectura', 'Solo puede ver datos pero no editarlos', '2020-03-04'),
-(6, 'Escritor ', 'sssss', '2020-04-25');
+(2, 'Lectura', 'Solo puede ver datos pero no editarlos', '2020-03-04');
 
 -- --------------------------------------------------------
 
@@ -170,7 +163,8 @@ CREATE TABLE `usuarios` (
   `nombre` varchar(30) COLLATE utf8_spanish_ci NOT NULL,
   `apellidos` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   `email` varchar(40) COLLATE utf8_spanish_ci NOT NULL,
-  `password` text COLLATE utf8_spanish_ci NOT NULL,
+  `password` varchar(30) COLLATE utf8_spanish_ci NOT NULL,
+  `status` char(1) COLLATE utf8_spanish_ci NOT NULL DEFAULT '1',
   `fecha_creacion` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
@@ -178,9 +172,9 @@ CREATE TABLE `usuarios` (
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`idusuario`, `idrol`, `nombre`, `apellidos`, `email`, `password`, `fecha_creacion`) VALUES
-(1, 1, 'Jesús', 'González Memije', 'memije.dev@gmail.com', '12345', '2020-03-04'),
-(2, 2, 'Eduardo ', 'Castro', 'eduardo@gmail.com', '1212', '2020-03-04');
+INSERT INTO `usuarios` (`idusuario`, `idrol`, `nombre`, `apellidos`, `email`, `password`, `status`, `fecha_creacion`) VALUES
+(3, 1, 'Jesús  ', 'González Memije', 'memije.dev@gmail.com', '1212', '1', '2020-05-04'),
+(4, 1, 'Eduardo', 'Castro', 'eduardo@gmail.com', '1212', '1', '2020-05-04');
 
 --
 -- Índices para tablas volcadas
@@ -245,22 +239,22 @@ ALTER TABLE `herramientas`
 -- AUTO_INCREMENT de la tabla `materiales_obra`
 --
 ALTER TABLE `materiales_obra`
-  MODIFY `idmaterial_obra` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `idmaterial_obra` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT de la tabla `obras`
 --
 ALTER TABLE `obras`
-  MODIFY `idobra` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idobra` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT de la tabla `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `idrol` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idrol` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `idusuario` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idusuario` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- Restricciones para tablas volcadas
 --
@@ -276,7 +270,7 @@ ALTER TABLE `herramientas`
 --
 ALTER TABLE `materiales_obra`
   ADD CONSTRAINT `materiales_obra_herramientas` FOREIGN KEY (`idherramienta`) REFERENCES `herramientas` (`idherramienta`),
-  ADD CONSTRAINT `materiales_obra_obras` FOREIGN KEY (`idobra`) REFERENCES `obras` (`idobra`);
+  ADD CONSTRAINT `materiales_obra_obras` FOREIGN KEY (`idobra`) REFERENCES `obras` (`idobra`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `obras`

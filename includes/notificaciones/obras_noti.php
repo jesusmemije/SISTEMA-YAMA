@@ -10,7 +10,27 @@
                 timer: 3000,
             })
             </script>";
-        }else{
+        } else if ( $_GET['add'] == 'error-herramienta' ) {
+            echo "<script>
+            Swal.fire({
+                icon: 'info',
+                title: '¡Info!',
+                text: 'Hemos tenido un problema al intentar obtener la herramienta',
+                showConfirmButton: true,
+                timer: 3000,
+            })
+            </script>";
+        } else if ( $_GET['add'] == 'warning-inventary' ) {
+            echo "<script>
+            Swal.fire({
+                icon: 'warning',
+                title: '¡Advertencia!',
+                text: 'No existe suficiente herramienta en el inventario',
+                showConfirmButton: true,
+                timer: 3000,
+            })
+            </script>";
+        } else {
             echo "<script>
             Swal.fire({
                 icon: 'error',

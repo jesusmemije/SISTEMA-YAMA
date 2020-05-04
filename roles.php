@@ -17,8 +17,10 @@ $filas = $statement->fetchAll();
             <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
             <li class="breadcrumb-item active">Roles</li>
         </ol>
+        <?php if ($_SESSION['rol'] == 'administrador') { ?>
         <button type="button" class="btn btn-outline-primary" role="button" data-toggle="modal" data-target="#add_rol"><i class="fas fa-plus"></i> Agregar Categoria</button>
         <br><br>
+        <?php } ?>
         <div class="card mb-4">
             <div class="card-header"><i class="fas fa-table mr-1"></i>Roles del sistema
             </div>                            
@@ -31,7 +33,9 @@ $filas = $statement->fetchAll();
                                 <th>Rol</th>
                                 <th>Descripción</th>
                                 <th>Fecha creación</th>
+                                <?php if ($_SESSION['rol'] == 'administrador') { ?>
                                 <th>Opciones</th>
+                                <?php  } ?>
                             </tr>
                         </thead>
                         <tfoot>
@@ -40,7 +44,9 @@ $filas = $statement->fetchAll();
                                 <th>Rol</th>
                                 <th>Descripción</th>
                                 <th>Fecha creación</th>
+                                <?php if ($_SESSION['rol'] == 'administrador') { ?>
                                 <th>Opciones</th>
+                                <?php  } ?>
                             </tr>
                         </tfoot>
                         <tbody>
@@ -56,19 +62,25 @@ $filas = $statement->fetchAll();
                                 <td>'.$counter.'</td>
                                 <td>'.$fila['rol'].'</td>
                                 <td>'.$fila['descripcion'].'</td>
-                                <td>'.$fecha_creacion.'</td>
-                                <td class="text-center">
+                                <td>'.$fecha_creacion.'</td>';
+
+                                if ($_SESSION['rol'] == 'administrador') {
+                                echo '<td class="text-center">
                                 <button type="button" class="btn btn-outline-warning" role="button" data-toggle="modal" data-target="#editar'.$counter.'">
                                 <i class="fas fa-edit"></i>
                                 </button> 
                                 <button type="button" class="btn btn-outline-danger" role="button" data-toggle="modal" data-target="#delete'.$counter.'">
                                 <i class="fas fa-trash-alt"></i>
                                 </button> 
-                                </td>
-                                </tr>';
+                                </td>';
+                                }
 
+                                echo '</tr>';
+
+                                if ($_SESSION['rol'] == 'administrador') {
                                 include "includes/modals/rol_edit.php";
                                 include "includes/modals/rol_delete.php";
+                                }
 
                                 $counter++;
 

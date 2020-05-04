@@ -21,8 +21,10 @@ $roles = $stm->fetchAll();
             <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
             <li class="breadcrumb-item active">Usuarios</li>
         </ol>
+        <?php if ($_SESSION['rol'] == 'administrador') { ?>
         <button type="button" class="btn btn-outline-primary" role="button" data-toggle="modal" data-target="#add_usuario"><i class="fas fa-plus"></i> Agregar Usuario</button>
         <br><br>
+        <?php } ?>
         <div class="card mb-4">
             <div class="card-header"><i class="fas fa-table mr-1"></i>Usuarios del sistema
             </div>                            
@@ -36,8 +38,11 @@ $roles = $stm->fetchAll();
                                 <th>Apellidos</th>
                                 <th>E-mail</th>
                                 <th>Rol</th>
+                                <th>Status</th>
                                 <th>Fecha creación</th>
+                                <?php if ($_SESSION['rol'] == 'administrador') { ?>
                                 <th>Opciones</th>
+                                <?php  } ?>
                             </tr>
                         </thead>
                         <tfoot>
@@ -47,8 +52,11 @@ $roles = $stm->fetchAll();
                                 <th>Apellidos</th>
                                 <th>E-mail</th>
                                 <th>Rol</th>
+                                <th>Status</th>
                                 <th>Fecha creación</th>
+                                <?php if ($_SESSION['rol'] == 'administrador') { ?>
                                 <th>Opciones</th>
+                                <?php  } ?>
                             </tr>
                         </tfoot>
                         <tbody>
@@ -65,21 +73,34 @@ $roles = $stm->fetchAll();
                                 <td>'.$fila['nombre'].'</td>
                                 <td>'.$fila['apellidos'].'</td>
                                 <td>'.$fila['email'].'</td>
-                                <td>'.$fila['rol'].'</td>
-                                <td>'.$fecha_creacion.'</td>
-                                <td class="text-center">
+                                <td>'.$fila['rol'].'</td>';
+                                
+                                if ($fila['status'] == '1') {
+                                    echo '<td>'.$fila['rol'].'</td>';
+                                } else {
+                                    echo '<td>'.$fila['rol'].'</td>';
+                                }
+                               
+                                echo '<td>'.$fecha_creacion.'</td>';
+
+                                if ($_SESSION['rol'] == 'administrador') {
+                                echo '<td class="text-center">
                                 <button type="button" class="btn btn-outline-warning" role="button" data-toggle="modal" data-target="#editar'.$counter.'">
                                 <i class="fas fa-edit"></i>
                                 </button> 
                                 <button type="button" class="btn btn-outline-danger" role="button" data-toggle="modal" data-target="#delete'.$counter.'">
                                 <i class="fas fa-trash-alt"></i>
                                 </button>
-                                </td>
-                                </tr>';
+                                </td>';
+                                }
 
+                                echo '</tr>';
+
+                                if ($_SESSION['rol'] == 'administrador') {
                                 include "includes/modals/usuario_edit.php";
                                 include "includes/modals/usuario_delete.php";
-
+                                }
+                                
                                 $counter++;
 
                             } ?>

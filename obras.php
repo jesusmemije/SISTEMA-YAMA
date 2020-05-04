@@ -21,8 +21,10 @@ $herramientas_list = $stm->fetchAll();
 			<li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
 			<li class="breadcrumb-item active">Obras</li>
 		</ol>
+		<?php if ($_SESSION['rol'] == 'administrador') { ?>
 		<button type="button" class="btn btn-outline-primary" role="button" data-toggle="modal" data-target="#add_obra"><i class="fas fa-plus"></i> Agregar Obra</button>
         <br><br>
+        <?php } ?>
 		<div class="card mb-4">
 			<div class="card-header"><i class="fas fa-table mr-1"></i>Obras registradas
 			</div>                            
@@ -36,7 +38,9 @@ $herramientas_list = $stm->fetchAll();
 								<th>Usuario registro</th>
 								<th>Fecha creación</th>
 								<th class="text-center">Herramientas</th>
+								<?php if ($_SESSION['rol'] == 'administrador') { ?>
 								<th class="text-center">Opciones</th>
+								<?php } ?>
 							</tr>
 						</thead>
 						<tfoot>
@@ -46,7 +50,9 @@ $herramientas_list = $stm->fetchAll();
 								<th>Usuario registro</th>
 								<th>Fecha creación</th>
 								<th class="text-center">Herramientas</th>
+								<?php if ($_SESSION['rol'] == 'administrador') { ?>
 								<th class="text-center">Opciones</th>
+								<?php } ?>
 							</tr>
 						</tfoot>
 						<tbody>
@@ -66,25 +72,34 @@ $herramientas_list = $stm->fetchAll();
 								<td class="text-center">
 								<button type="button" class="btn btn-outline-dark" role="button" data-toggle="modal" data-target="#herramientas'.$counter.'">
 									<i class="fas fa-eye"></i>
-								</button> 
-								<button type="button" class="btn btn-outline-primary" role="button" data-toggle="modal" data-target="#mas_herramienta'.$counter.'">
+								</button> ';
+								if ($_SESSION['rol'] == 'administrador') {
+								echo ' <button type="button" class="btn btn-outline-primary" role="button" data-toggle="modal" data-target="#mas_herramienta'.$counter.'">
 									<i class="fas fa-plus"></i>
-								</button> 
-								</td>
-								<td class="text-center">
+								</button>';
+								}
+								echo '</td>';
+
+								if ($_SESSION['rol'] == 'administrador') {
+								echo '<td class="text-center">
 								<button type="button" class="btn btn-outline-warning" role="button" data-toggle="modal" data-target="#editar'.$counter.'">
 									<i class="fas fa-edit"></i>
 								</button> 
 								<button type="button" class="btn btn-outline-danger" role="button" data-toggle="modal" data-target="#delete'.$counter.'">
 									<i class="fas fa-trash-alt"></i>
 								</button> 
-								</td>
-								</tr>';
+								</td>';
+								}
 
-								include "includes/modals/obra_herramientas.php";
+								echo '</tr>';
+
+								if ($_SESSION['rol'] == 'administrador') {
 								include "includes/modals/obra_edit.php";
 								include "includes/modals/obra_delete.php";
 								include "includes/modals/mas_herramienta.php";
+								}
+
+								include "includes/modals/obra_herramientas.php";
 
 								$counter++;
 

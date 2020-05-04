@@ -21,8 +21,10 @@ $categorias = $stm->fetchAll();
             <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
             <li class="breadcrumb-item active">Herramientas</li>
         </ol>
+        <?php if ($_SESSION['rol'] == 'administrador') { ?>
         <button type="button" class="btn btn-outline-primary" role="button" data-toggle="modal" data-target="#add_herramienta"><i class="fas fa-plus"></i> Agregar Herramienta</button>
         <br><br>
+        <?php } ?>
         <div class="card mb-4">
             <div class="card-header"><i class="fas fa-table mr-1"></i>Inventario de herraminetas y materiales
             </div>                            
@@ -36,7 +38,9 @@ $categorias = $stm->fetchAll();
                                 <th>Categoria</th>
                                 <th>Existencias</th>
                                 <th>Fecha creación</th>
+                                <?php if ($_SESSION['rol'] == 'administrador') { ?>
                                 <th>Opciones</th>
+                                <?php  } ?>
                             </tr>
                         </thead>
                         <tfoot>
@@ -46,7 +50,9 @@ $categorias = $stm->fetchAll();
                                 <th>Categoria</th>
                                 <th>Existencias</th>
                                 <th>Fecha creación</th>
+                                <?php if ($_SESSION['rol'] == 'administrador') { ?>
                                 <th>Opciones</th>
+                                <?php  } ?>
                             </tr>
                         </tfoot>
                         <tbody>
@@ -63,20 +69,28 @@ $categorias = $stm->fetchAll();
                                 <td>'.$fila['herramienta'].'</td>
                                 <td>'.$fila['categoria'].'</td>
                                 <td>'.$fila['cantidad'].'</td>
-                                <td>'.$fecha_creacion.'</td>
-                                <td class="text-center">
+                                <td>'.$fecha_creacion.'</td>';
+
+                                if ($_SESSION['rol'] == 'administrador') {
+
+                                echo '<td class="text-center">
                                 <button type="button" class="btn btn-outline-warning" role="button" data-toggle="modal" data-target="#editar'.$counter.'">
                                 <i class="fas fa-edit"></i>
                                 </button> 
                                 <button type="button" class="btn btn-outline-danger" role="button" data-toggle="modal" data-target="#delete'.$counter.'">
                                 <i class="fas fa-trash-alt"></i>
                                 </button> 
-                                </td>
-                                </tr>';
+                                </td>';
 
+                                }
+
+                                echo'</tr>';
+
+                                if ($_SESSION['rol'] == 'administrador') {
                                 include "includes/modals/herramienta_edit.php";
                                 include "includes/modals/herramienta_delete.php";
-
+                                }
+                                
                                 $counter++;
 
                             } ?>

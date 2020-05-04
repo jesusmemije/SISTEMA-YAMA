@@ -8,7 +8,7 @@ $password = $_POST['password'];
 if (!empty($email) && !empty($password)) {
 
 	$execute = $PDO->prepare("SELECT idusuario, nombre,apellidos,email,rol FROM usuarios usrs INNER JOIN roles rols ON usrs.idrol = rols.idrol WHERE usrs.email = :email 
-		AND usrs.password = :password");
+		AND usrs.password = :password AND usrs.status = 1");
 
 	$execute->execute(array(
 		':email' => $email,

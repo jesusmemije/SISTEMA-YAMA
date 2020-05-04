@@ -1,12 +1,15 @@
-             
+        
+        <?php include "politica-privacidad.php" ?>
+        <?php include "terminos-y-condiciones.php" ?>
+
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid">
                         <div class="d-flex align-items-center justify-content-between small">
                             <div class="text-muted">Copyright &copy; Constructora Yama 2020</div>
                             <div>
-                                <a href="#">Política de Privacidad</a>
+                                <a href="#" data-toggle="modal" data-target="#politica-privacidad">Política de Privacidad</a>
                                 &middot;
-                                <a href="#">Términos &amp; Condiciones</a>
+                                <a href="#" data-toggle="modal" data-target="#terminos-y-condiciones">Términos &amp; Condiciones</a>
                             </div>
                         </div>
                     </div>
